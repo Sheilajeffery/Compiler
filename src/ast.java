@@ -9,6 +9,9 @@ class PlusAst extends ExprAST {
 		this.right = right;
 		this.left = left;
 	}
+	public String toString() {
+		return left + " + " + right;
+	}
 }
 
 class MinusAst extends ExprAST {
@@ -19,6 +22,9 @@ class MinusAst extends ExprAST {
 		this.right = right;
 		this.left = left;
 	}
+	public String toString() {
+		return left + " - " + right;
+	}
 }
 
 class NumberAst extends ExprAST {
@@ -26,6 +32,9 @@ class NumberAst extends ExprAST {
 
 	public NumberAst(int value) {
 		this.value = value;
+	}
+	public String toString() {
+		return value + "";
 	}
 }
 
@@ -35,19 +44,12 @@ class VariableAst extends ExprAST {
 	public VariableAst(String name) {
 		this.name = name;
 	}
+	public String toString() {
+		return name;
+	}
 }
 
 abstract class CommandAST{}
-
-class VariableNameAst extends CommandAST{
-	public String name;
-
-	public VariableNameAst(String name) {
-		this.name = name;
-	}
-	
-	
-}
 
 class WhileAst extends CommandAST{
 	public ExprAST condition;
@@ -57,15 +59,23 @@ class WhileAst extends CommandAST{
 		this.condition = condition;
 		this.body = body;
 	}
+	public String toString() {
+		return "while (" + condition + ") {" + body + "}";
+	}
+	
 }
 class AssignAst extends CommandAST{
-	public ExprAST expr1;
-	public ExprAST expr2;
+	public String  name;
+	public ExprAST expr;
 	
-	public AssignAst(ExprAST expr1, ExprAST expr2) {
-		this.expr1 = expr1;
-		this.expr2 = expr2;
+	public AssignAst(String name, ExprAST expr) {
+		this.name = name;
+		this.expr = expr;
 	}
+	public String toString() {
+		return name + " := " + expr;
+	}
+	
 } 
 
 class SeqAst extends CommandAST{
@@ -75,6 +85,9 @@ class SeqAst extends CommandAST{
 	public SeqAst(CommandAST command1, CommandAST command2) {
 		this.command1 = command1;
 		this.command2 = command2;
+	}
+	public String toString() {
+		return command1 + " ; " + command2;
 	}
 	
 }
