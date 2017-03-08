@@ -11,19 +11,19 @@ public class Parser {
 	public boolean finished() {
 		return idx == tokenList.size();
 	}
-	
+
 	public boolean atLastToken() {
 		return idx == tokenList.size() - 1;
 	}
-	
+
 	public Token currentToken() {
 		return tokenList.get(idx);
 	}
-	
+
 	public Token nextToken() {
 		return tokenList.get(idx+1);
 	}
-	
+
 	public String parseName() {
 		if (!finished() && currentToken() instanceof VarName) {
 			String name = ((VarName) (currentToken())).name;
@@ -32,9 +32,9 @@ public class Parser {
 		}
 		else throw new RuntimeException("parseName: VarName token not found");
 	}
-	
+
 	public ExprAST parseE() {
-		
+
 		if (currentToken() instanceof Number && atLastToken()) {
 			NumberAst numast = new NumberAst(((Number) (tokenList.get(idx))).value);
 			idx++;
@@ -47,8 +47,8 @@ public class Parser {
 		if (currentToken() instanceof Number && nextToken() instanceof Plus) {
 			idx += 2;
 			return new PlusAst(new NumberAst(((Number) (currentToken())).value), parseE());
-		} 
-		else if (currentToken()) instanceof Number && nextToken instanceof Minus) {
+		}
+		else if (currentToken() instanceof Number && nextToken() instanceof Minus) {
 			idx += 2;
 			return new MinusAst(new NumberAst(((Number) (currentToken())).value),parseE());
 		}
@@ -61,7 +61,7 @@ public class Parser {
 			VariableAst var = new VariableAst(((VarName) (currentToken())).name);
 			idx++;
 			return var;
-		}		
+		}
 		else {
 			throw new RuntimeException("ParseE failed. Input wrong!");
 		}

@@ -8,7 +8,7 @@ public class Lexer {
 
 	public static void main(String[] args) throws Exception {
 
-		String fileName = "C:\\Users\\SheilaS\\workspace\\Compiler\\src\\input.txt";
+		String fileName = "src/input.txt";
 
 		// FileReader reads text files in the default encoding.
 		FileReader fileReader = new FileReader(fileName);
@@ -17,11 +17,11 @@ public class Lexer {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 		Yylex scanner = new Yylex(fileReader);
-		
+
 		ArrayList<Token> tokens = new ArrayList<Token>();
 		Token t = scanner.yylex();
 
-		
+
 		while (t != null) {
 			tokens.add(t);
 			t = scanner.yylex();
@@ -29,17 +29,17 @@ public class Lexer {
 
 		// Always close files.
 		bufferedReader.close();
-	
+
 	for(Token to: tokens)
 		System.out.println(to);
-	
-	
+
+
 	Parser p = new Parser(tokens);
-	
+
 	System.out.println(p.parse());
-	
-	
+
+
 	}
 
-	
+
 }
