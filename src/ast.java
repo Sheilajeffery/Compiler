@@ -49,12 +49,14 @@ class VariableAst extends ExprAST {
 	}
 }
 
+// _____________ COMMANDS _________________
+
 abstract class CommandAST{}
 
 class WhileAst extends CommandAST{
 	public ExprAST condition;
 	public CommandAST body;
-	
+
 	public WhileAst(ExprAST condition, CommandAST body){
 		this.condition = condition;
 		this.body = body;
@@ -62,12 +64,12 @@ class WhileAst extends CommandAST{
 	public String toString() {
 		return "while (" + condition + ") {" + body + "}";
 	}
-	
+
 }
 class AssignAst extends CommandAST{
 	public String  name;
 	public ExprAST expr;
-	
+
 	public AssignAst(String name, ExprAST expr) {
 		this.name = name;
 		this.expr = expr;
@@ -75,21 +77,19 @@ class AssignAst extends CommandAST{
 	public String toString() {
 		return name + " := " + expr;
 	}
-	
-} 
+
+}
 
 class SeqAst extends CommandAST{
-	public CommandAST command1;
-	public CommandAST command2;
+	public CommandAST first;
+	public CommandAST second;
 
-	public SeqAst(CommandAST command1, CommandAST command2) {
-		this.command1 = command1;
-		this.command2 = command2;
+	public SeqAst(CommandAST first, CommandAST second) {
+		this.first = first;
+		this.second = second;
 	}
 	public String toString() {
-		return command1 + " ; " + command2;
+		return first + " ; " + second;
 	}
-	
-}
-	
 
+}

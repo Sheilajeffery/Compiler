@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Lexer {
 
@@ -36,7 +37,17 @@ public class Lexer {
 
 	Parser p = new Parser(tokens);
 
-	System.out.println(p.parse());
+	HashMap<String, Integer> store = new HashMap<String, Integer>();
+
+	CommandAST prog = p.parse();
+	System.out.println(prog);
+
+	Interpreter interpreter = new Interpreter();
+	 store = interpreter.interpretCommand(prog, store);
+
+
+	System.out.println(store);
+
 
 
 	}
