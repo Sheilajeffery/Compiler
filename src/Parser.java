@@ -34,24 +34,36 @@ public class Parser {
 	}
 
 	public ExprAST parseE() {
-
 		if (currentToken() instanceof Number && atLastToken()) {
-			NumberAst numast = new NumberAst(((Number) (tokenList.get(idx))).value);
+			NumberAst numast = new NumberAst(((Number) currentToken()).value);
 			idx++;
 			return numast;
 		}
 		else if (currentToken() instanceof VarName && atLastToken()) {
 			return new VariableAst(parseName());
 		}
-
-		if (currentToken() instanceof Number && nextToken() instanceof Plus) {
+		else if (currentToken() instanceof Number && nextToken() instanceof Plus) {
+			NumberAst num = new NumberAst(((Number) (currentToken())).value);
 			idx += 2;
-			return new PlusAst(new NumberAst(((Number) (currentToken())).value), parseE());
+			return new PlusAst(num , parseE());
 		}
 		else if (currentToken() instanceof Number && nextToken() instanceof Minus) {
+			NumberAst num = new NumberAst(((Number) (currentToken())).value);
 			idx += 2;
-			return new MinusAst(new NumberAst(((Number) (currentToken())).value),parseE());
+			return new MinusAst(num, parseE());
 		}
+		//______________________________________________
+		else if(currentToken() instanceof VarName && nextToken() instanceof Minus) {
+			VariableAst var = new VariableAst(((VarName)(currentToken())).name);
+			idx +=2;
+			return new MinusAst(var, parseE());
+		}
+		else if(currentToken() instanceof VarName && nextToken() instanceof Plus) {
+			VariableAst var = new VariableAst(((VarName)(currentToken())).name);
+			idx +=2;
+			return new PlusAst(var, parseE());
+		}
+		//_______________________________________________
 		else if (currentToken() instanceof Number) {
 			NumberAst numast = new NumberAst(((Number) (currentToken())).value);
 			idx++;
