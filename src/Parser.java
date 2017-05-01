@@ -52,7 +52,6 @@ public class Parser {
 			idx += 2;
 			return new MinusAst(num, parseE());
 		}
-		//______________________________________________
 		else if(currentToken() instanceof VarName && nextToken() instanceof Minus) {
 			VariableAst var = new VariableAst(((VarName)(currentToken())).name);
 			idx +=2;
@@ -63,7 +62,6 @@ public class Parser {
 			idx +=2;
 			return new PlusAst(var, parseE());
 		}
-		//_______________________________________________
 		else if (currentToken() instanceof Number) {
 			NumberAst numast = new NumberAst(((Number) (currentToken())).value);
 			idx++;

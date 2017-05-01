@@ -1,4 +1,6 @@
+import java.util.*;
 abstract class ExprAST {
+	public abstract HashSet<String> vars();
 }
 
 class PlusAst extends ExprAST {
@@ -11,6 +13,12 @@ class PlusAst extends ExprAST {
 	}
 	public String toString() {
 		return left + " + " + right;
+	}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.left.vars());
+		vs.addAll(this.right.vars());
+		return  vs;
 	}
 }
 
@@ -25,6 +33,12 @@ class MinusAst extends ExprAST {
 	public String toString() {
 		return left + " - " + right;
 	}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.left.vars());
+		vs.addAll(this.right.vars());
+		return  vs;
+	}
 }
 
 class NumberAst extends ExprAST {
@@ -35,6 +49,9 @@ class NumberAst extends ExprAST {
 	}
 	public String toString() {
 		return value + "";
+	}
+	public HashSet<String> vars(){
+		return  new HashSet<String>();
 	}
 }
 
@@ -47,11 +64,18 @@ class VariableAst extends ExprAST {
 	public String toString() {
 		return name;
 	}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.add(this.name);
+		return vs;
+	}
 }
 
 // _____________ COMMANDS _________________
 
-abstract class CommandAST{}
+abstract class CommandAST{
+	public abstract HashSet<String> vars();
+}
 
 class WhileAst extends CommandAST{
 	public ExprAST condition;
@@ -64,6 +88,14 @@ class WhileAst extends CommandAST{
 	public String toString() {
 		return "while (" + condition + ") {" + body + "}";
 	}
+
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.condition.vars());
+		vs.addAll(this.body.vars());
+		return vs;
+	}
+
 
 }
 class AssignAst extends CommandAST{
@@ -78,6 +110,13 @@ class AssignAst extends CommandAST{
 		return name + " := " + expr;
 	}
 
+	public HashSet<String> vars(){ //aici
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.expr.vars());
+		vs.add(this.name);
+		return vs;
+	}
+
 }
 
 class SeqAst extends CommandAST{
@@ -90,6 +129,13 @@ class SeqAst extends CommandAST{
 	}
 	public String toString() {
 		return first + " ; " + second;
+	}
+
+	public HashSet<String> vars(){ //aici
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.first.vars());
+		vs.addAll(this.second.vars());
+		return vs;
 	}
 
 }

@@ -1,1 +1,1 @@
-java -cp bin/ Lexer
+java -cp bin/ Main
