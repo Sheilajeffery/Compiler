@@ -56,7 +56,11 @@ public class Main {
 //System.out.println(variables.indexOf("y"));
 
 CodeGenerator gen = new CodeGenerator(prog, variables);
-System.out.println(gen.codeGen(prog));
+String mipsCode = "move $fp $sp \nsubi $sp $sp " + variables.size()*4 + "\n"
+								+  gen.codeGen(prog)
+								+ "move $sp $fp ";
+System.out.println(mipsCode);
+//System.out.println(gen.codeGen(prog));
 
 
 

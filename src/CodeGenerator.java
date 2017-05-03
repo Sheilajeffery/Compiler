@@ -36,7 +36,7 @@ public String codeGen(ExprAST e){
           + "sub $a0 $a0 $a1\n";
   }
   else if (e instanceof VariableAst)
-  return "lw $a0 " + (((vars.size()-1) - vars.indexOf(((VariableAst)e).name))*4) + " ($sp)\n";
+  return "lw $a0 " +  vars.indexOf(((VariableAst)e).name)*4 + " ($fp)\n";
   else return "ERROR";
 }
 
@@ -56,8 +56,8 @@ if(c instanceof SeqAst){
   else if (c instanceof AssignAst){
     return codeGen(((AssignAst)c).expr)
     +"sw $a0 "
-    + ((vars.size()-1)-vars.indexOf(((AssignAst)c).name))*4
-    + " ($sp)\n";
+    + vars.indexOf(((AssignAst)c).name)*4
+    + "($fp)\n";
 
   }
     else return "ERROR";
