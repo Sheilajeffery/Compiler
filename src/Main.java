@@ -53,8 +53,10 @@ public class Main {
 	ArrayList<String> variables = new ArrayList (prog.vars());
 	System.out.println(variables);
 
-System.out.println(variables.indexOf("y"));
+//System.out.println(variables.indexOf("y"));
 
+CodeGenerator gen = new CodeGenerator(prog, variables);
+System.out.println(gen.codeGen(prog));
 
 
 

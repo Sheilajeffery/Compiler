@@ -106,12 +106,12 @@ public class Parser {
 
 				else if (currentToken() instanceof Rcurl)
 					return new WhileAst(condition, body);
-				else throw new RuntimeException();
+				else throw new RuntimeException("ParseC failed. Expeced a '{''");
 
 			} else
-				throw new RuntimeException();
+				throw new RuntimeException("ParseC failed.While is incorect!");
 		} else
-			throw new RuntimeException();
+			throw new RuntimeException("ParseC failed. While statement wrong");
 
 	}
 
