@@ -11,10 +11,8 @@ public class Main {
 
 		String fileName = "src/input.txt";
 
-		// FileReader reads text files in the default encoding.
 		FileReader fileReader = new FileReader(fileName);
 
-		// Always wrap FileReader in BufferedReader.
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 		Yylex scanner = new Yylex(fileReader);

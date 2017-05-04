@@ -84,8 +84,12 @@ public class Parser {
 			idx += 2;
 			AssignAst ast = new AssignAst(var, parseE());
 			if (idx < tokenList.size() && currentToken() instanceof Semicolon) {
-				idx++;
-				return new SeqAst(ast, parse());
+				if(currentToken() instanceof Semicolon && !atLastToken())
+					{	idx++;
+						return new SeqAst(ast, parse());
+					}
+					else
+					throw new RuntimeException("Parse failed. Unexpected Semicolon at the end!");
 			}
 			else return ast;
 
@@ -100,8 +104,14 @@ public class Parser {
 					return new WhileAst(condition, body);
 
 				else if (currentToken() instanceof Rcurl && nextToken() instanceof Semicolon) {
-					idx += 2;
-					return new SeqAst(new WhileAst(condition, body), parse());
+					idx += 1;
+					if(currentToken() instanceof Semicolon && !atLastToken())
+					{	idx++;
+						return new SeqAst(new WhileAst(condition, body), parse());
+					}
+					else{
+					throw new RuntimeException("Unexpected semicolon at the end!");
+					}
 				}
 
 				else if (currentToken() instanceof Rcurl)
