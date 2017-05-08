@@ -1,7 +1,5 @@
-import java.io.BufferedReader;
-import java.io.File;
+import java_cup.runtime.*;
 import java.io.FileReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,60 +7,31 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		String fileName = "src/input.txt";
+		Lexer lexer = new Lexer(new FileReader(args[0]));
+		Parser parser = new Parser(lexer);
+		CommandAST prog = (CommandAST) parser.parse().value;
+		System.out.println(prog);
 
-		FileReader fileReader = new FileReader(fileName);
-
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-		Yylex scanner = new Yylex(fileReader);
-
-		ArrayList<Token> tokens = new ArrayList<Token>();
-		Token t = scanner.yylex();
+		HashMap<String, Integer> store = new HashMap<String, Integer>();
 
 
-		while (t != null) {
-			tokens.add(t);
-			t = scanner.yylex();
-		}
-
-		// Always close files.
-		bufferedReader.close();
-
-	for(Token to: tokens)
-		System.out.println(to);
+		Interpreter interpreter = new Interpreter();
+	 	store = interpreter.interpretCommand(prog, store);
 
 
-	Parser parser = new Parser(tokens);
-
-	HashMap<String, Integer> store = new HashMap<String, Integer>();
-
-	CommandAST prog = parser.parse();
-	System.out.println(prog);
+		System.out.println(store);
 
 
-	Interpreter interpreter = new Interpreter();
-	 store = interpreter.interpretCommand(prog, store);
+		ArrayList<String> variables = new ArrayList (prog.vars());
+		System.out.println(variables);
 
 
-	System.out.println(store);
 
-
-	ArrayList<String> variables = new ArrayList (prog.vars());
-	System.out.println(variables);
-
-//System.out.println(variables.indexOf("y"));
-
-CodeGenerator gen = new CodeGenerator(prog, variables);
-String mipsCode = "move $fp $sp \nsubi $sp $sp " + variables.size()*4 + "\n"
+		CodeGenerator gen = new CodeGenerator(prog, variables);
+		String mipsCode = "move $fp $sp \nsubi $sp $sp " + variables.size()*4 + "\n"
 								+  gen.codeGen(prog)
 								+ "move $sp $fp ";
-System.out.println(mipsCode);
-//System.out.println(gen.codeGen(prog));
-
-
-
+								System.out.println(mipsCode);
 	}
-
 
 }

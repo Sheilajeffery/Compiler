@@ -1,5 +1,6 @@
 %%
 %type Token
+%class Lexer
 %%
 
 "while"			{ return new While(); }

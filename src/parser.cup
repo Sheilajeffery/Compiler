@@ -1,0 +1,83 @@
+import java_cup.runtime.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+parser code {:
+
+  class MyScanner implements Scanner{
+
+    private Lexer lexer;
+    private SymbolFactory symbolFactory;
+
+    public MyScanner(Lexer lexer, SymbolFactory sf) {
+        this.lexer = lexer;
+        this.symbolFactory = sf;
+    }
+
+
+  public Symbol next_token(){
+    Token next;
+    try{
+      next = lexer.yylex();
+    }
+      catch(Exception e){
+        throw new RuntimeException("Invalid token!");
+      }
+
+      if(next == null)
+          return symbolFactory.newSymbol("", sym.EOF);
+      else if(next instanceof Plus)
+          return symbolFactory.newSymbol("", sym.PLUS);
+      else if(next instanceof Minus)
+          return symbolFactory.newSymbol("", sym.MINUS);
+      else if(next instanceof While)
+            return symbolFactory.newSymbol("",sym.WHILE);
+      else if(next instanceof VarName)
+          return symbolFactory.newSymbol("",sym.VARNAME, ((VarName)next).name);
+      else if(next instanceof Lbr)
+          return symbolFactory.newSymbol("",sym.LBR);
+      else if(next instanceof Rbr)
+          return symbolFactory.newSymbol("",sym.RBR);
+      else if(next instanceof Rcurl)
+          return symbolFactory.newSymbol("",sym.RCURL);
+      else if(next instanceof Lcurl)
+        return symbolFactory.newSymbol("",sym.LCURL);
+      else if(next instanceof Semicolon)
+        return symbolFactory.newSymbol("",sym.SEMICOLON);
+      else if(next instanceof Assign)
+        return symbolFactory.newSymbol("",sym.ASSIGN);
+      else if(next instanceof Number)
+        return symbolFactory.newSymbol("",sym.NUMBER,((Number)next).value);
+      else throw new RuntimeException("Invalid token");
+  }
+}
+    private MyScanner scanner;
+
+    public Parser(Lexer lexer) {
+        this.scanner = new MyScanner(lexer, new DefaultSymbolFactory());
+    }
+
+:};
+
+init with {: :}
+scan with {: return scanner.next_token(); :}
+
+terminal PLUS, MINUS, LBR, RBR, LCURL, RCURL, SEMICOLON, ASSIGN, WHILE;
+terminal String VARNAME;
+terminal Integer NUMBER;
+
+non terminal CommandAST c;
+non terminal ExprAST e;
+
+start with c;
+
+c ::= VARNAME:name ASSIGN e:expr {: RESULT = new AssignAst(name, expr); :}
+    | WHILE LBR e:condition RBR LCURL c:body RCURL {:RESULT = new WhileAst(condition, body); :}
+    | c:first SEMICOLON c:second {: RESULT = new SeqAst(first, second); :}
+    ;
+
+e ::= NUMBER:num {: RESULT = new NumberAst(num);  :}
+    | VARNAME:name  {: RESULT = new VariableAst(name); :}
+    | e:expr1 PLUS e:expr2 {: RESULT = new PlusAst(expr1, expr2); :}
+    | e:expr1 MINUS e:expr2{: RESULT = new MinusAst(expr1, expr2); :}
+    ;

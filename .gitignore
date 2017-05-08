@@ -1,2 +1,4 @@
 bin/
-src/Yylex.java
+src/Lexer.java
+src/sym.java
+src/Parser.java
