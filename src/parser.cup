@@ -30,6 +30,10 @@ parser code {:
           return symbolFactory.newSymbol("", sym.PLUS);
       else if(next instanceof Minus)
           return symbolFactory.newSymbol("", sym.MINUS);
+      else if (next instanceof Times)
+            return symbolFactory.newSymbol("", sym.TIMES);
+      else if (next instanceof Divide)
+            return symbolFactory.newSymbol("", sym.DIVIDE);
       else if(next instanceof While)
             return symbolFactory.newSymbol("",sym.WHILE);
       else if(next instanceof VarName)
@@ -62,7 +66,7 @@ parser code {:
 init with {: :}
 scan with {: return scanner.next_token(); :}
 
-terminal PLUS, MINUS, LBR, RBR, LCURL, RCURL, SEMICOLON, ASSIGN, WHILE;
+terminal PLUS, MINUS, LBR, RBR, LCURL, RCURL, SEMICOLON, ASSIGN, WHILE, DIVIDE, TIMES;
 terminal String VARNAME;
 terminal Integer NUMBER;
 
@@ -76,8 +80,10 @@ c ::= VARNAME:name ASSIGN e:expr {: RESULT = new AssignAst(name, expr); :}
     | c:first SEMICOLON c:second {: RESULT = new SeqAst(first, second); :}
     ;
 
-e ::= NUMBER:num {: RESULT = new NumberAst(num);  :}
+e ::= NUMBER:num          {: RESULT = new NumberAst(num);  :}
     | VARNAME:name  {: RESULT = new VariableAst(name); :}
     | e:expr1 PLUS e:expr2 {: RESULT = new PlusAst(expr1, expr2); :}
-    | e:expr1 MINUS e:expr2{: RESULT = new MinusAst(expr1, expr2); :}
+    | e:expr1 MINUS e:expr2 {: RESULT = new MinusAst(expr1, expr2); :}
+    | e:expr1 TIMES e:expr2 {: RESULT = new TimesAst(expr1, expr2); :}
+    | e:expr1 DIVIDE e:expr2{: RESULT = new DivideAst(expr1, expr2); :}
     ;

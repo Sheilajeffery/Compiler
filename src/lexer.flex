@@ -9,6 +9,8 @@
 [a-zA-Z]+		{ return new VarName(yytext()); }
 "-"				{ return new Minus(); }
 "+"		 		{ return new Plus(); }
+"*"       { return new Times(); }
+"/"       { return new Divide();}
 ";"				{ return new Semicolon(); }
 "("				{ return new Lbr(); }
 ")"				{ return new Rbr(); }

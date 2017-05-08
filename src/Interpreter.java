@@ -38,6 +38,14 @@ public class Interpreter {
     else if(expr instanceof MinusAst ) {
       return interpretExpr(((MinusAst)expr).left, store) - interpretExpr(((MinusAst)expr).right, store);
     }
+    else if(expr instanceof TimesAst ) {
+      return interpretExpr(((TimesAst)expr).left, store) * interpretExpr(((TimesAst)expr).right, store);
+    }
+    else if(expr instanceof DivideAst ) {
+      if(interpretExpr(((DivideAst)expr).right, store) !=0 )
+        return interpretExpr(((DivideAst)expr).left, store) / interpretExpr(((DivideAst)expr).right, store);
+     else throw new RuntimeException("Cannot divide by zero!");
+    }
     else if(expr instanceof VariableAst) {
       return store.get(((VariableAst)expr).name);
     }

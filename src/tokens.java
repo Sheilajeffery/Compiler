@@ -43,6 +43,18 @@ class Plus extends Token {
 	}
 }
 
+class Times extends Token{
+	public String toString(){
+		return "Times";
+	}
+}
+
+class Divide extends Token{
+	public String toString(){
+		return "Divide";
+	}
+}
+
 class Semicolon extends Token {
 	public String toString() {
 		return "Semicolon";

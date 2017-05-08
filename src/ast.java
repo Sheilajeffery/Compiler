@@ -22,6 +22,7 @@ class PlusAst extends ExprAST {
 	}
 }
 
+
 class MinusAst extends ExprAST {
 	public ExprAST left;
 	public ExprAST right;
@@ -40,6 +41,45 @@ class MinusAst extends ExprAST {
 		return  vs;
 	}
 }
+
+class TimesAst extends ExprAST{
+	public ExprAST left;
+	public ExprAST right;
+
+	public TimesAst(ExprAST left, ExprAST right) {
+		this.right = right;
+		this.left = left;
+	}
+	public String toString() {
+		return left + " * " + right;
+	}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.left.vars());
+		vs.addAll(this.right.vars());
+		return  vs;
+	}
+}
+
+class DivideAst extends ExprAST{
+	public ExprAST left;
+	public ExprAST right;
+
+	public DivideAst(ExprAST left, ExprAST right) {
+		this.right = right;
+		this.left = left;
+	}
+	public String toString() {
+		return left + " / " + right;
+	}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.left.vars());
+		vs.addAll(this.right.vars());
+		return  vs;
+	}
+}
+
 
 class NumberAst extends ExprAST {
 	public int value;

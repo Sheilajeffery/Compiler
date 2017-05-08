@@ -11,7 +11,8 @@ public CodeGenerator(CommandAST progAST, ArrayList<String> vars)
 
 public String codeGen(ExprAST e){
   if(e instanceof NumberAst){
-  return "li $a0 " + ((NumberAst)e).value + "\n";}
+  return "li $a0 " + ((NumberAst)e).value + "\n";
+  }
 
   else if (e instanceof PlusAst){
     String left = codeGen(((PlusAst)e).left);
@@ -24,6 +25,30 @@ public String codeGen(ExprAST e){
           + "addi $sp $sp 4\n"
           + "add $a0 $a0 $a1\n";
   }
+  else if (e instanceof TimesAst){
+    String left = codeGen(((TimesAst)e).left);
+    String right = codeGen(((TimesAst)e).right);
+    return left
+          + "\nsubi $sp $sp 4\n"
+          + "sw $a0 ($sp)\n"
+          + right
+          + "\nlw $a1 ($sp)\n"
+          + "addi $sp $sp 4\n"
+          + "mult $a0 $a1\n"
+          + "mflo $a0\n";
+  }
+  else if (e instanceof DivideAst){
+    String left = codeGen(((DivideAst)e).left);
+    String right = codeGen(((DivideAst)e).right);
+    return left
+          + "\nsubi $sp $sp 4\n"
+          + "sw $a0 ($sp)\n"
+          + right
+          + "lw $a1 ($sp)\n"
+          + "addi $sp $sp 4\n"
+          + "divu $a1 $a0\n"
+          + "mflo $a0\n";
+  }
   else if (e instanceof MinusAst){
     String left = codeGen(((MinusAst)e).left);
     String right = codeGen(((MinusAst)e).right);
@@ -33,7 +58,7 @@ public String codeGen(ExprAST e){
           + right
           + "\nlw $a1 ($sp)\n"
           + "addi $sp $sp 4\n"
-          + "sub $a0 $a0 $a1\n";
+          + "sub $a0 $a1 $a0\n";
   }
   else if (e instanceof VariableAst)
   return "lw $a0 " +  vars.indexOf(((VariableAst)e).name)*4 + " ($fp)\n";
