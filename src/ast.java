@@ -22,6 +22,62 @@ class PlusAst extends ExprAST {
 	}
 }
 
+class TrueAst extends ExprAST{
+	public String toString() {
+		return "true";
+		}
+	public HashSet<String> vars(){
+		return new HashSet<String>();
+		}
+	}
+
+	class FalseAst extends ExprAST{
+		public String toString() {
+			return "false";
+			}
+		public HashSet<String> vars(){
+			return new HashSet<String>();
+			}
+		}
+
+	class AndAst extends ExprAST{
+		public ExprAST left;
+		public ExprAST right;
+
+		public AndAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " && " + right;
+		}
+		public HashSet<String> vars(){
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
+	}
+
+	class OrAst extends ExprAST{
+		public ExprAST left;
+		public ExprAST right;
+
+		public OrAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " || " + right;
+		}
+		public HashSet<String> vars(){
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
+	}
+
 
 class MinusAst extends ExprAST {
 	public ExprAST left;

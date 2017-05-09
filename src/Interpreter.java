@@ -2,6 +2,26 @@ import java.util.HashMap;
 
 public class Interpreter {
 
+  public Integer and(Integer left, Integer right){
+    if(left == 0 && right == 0)
+    return new Integer(0);
+    else if((left == 0 && right == 1) || (left == 1 && right == 0))
+    return new Integer(0);
+    else if(left == 1 && right == 1)
+    return new Integer(1);
+    return null;
+  }
+
+  public Integer or(Integer left, Integer right){
+    if(left == 0 && right == 0)
+    return new Integer(0);
+    if((left == 0 && right == 1) || (left == 1 && right == 0))
+    return new Integer(1);
+    if(left == 1 && right == 1)
+    return new Integer(1);
+    return null;
+  }
+
   public HashMap<String, Integer> interpretCommand (CommandAST command, HashMap<String, Integer> initialStore )
   {
     if(command instanceof SeqAst ) {
@@ -32,6 +52,11 @@ public class Interpreter {
     if(expr instanceof NumberAst) {
       return new Integer(((NumberAst)expr).value);
     }
+    else if(expr instanceof TrueAst){
+      return new Integer(1);
+    }
+    else if(expr instanceof FalseAst)
+      return new Integer(0);
     else if(expr instanceof PlusAst ) {
       return interpretExpr(((PlusAst)expr).left, store) + interpretExpr(((PlusAst)expr).right, store);
     }
@@ -45,6 +70,12 @@ public class Interpreter {
       if(interpretExpr(((DivideAst)expr).right, store) !=0 )
         return interpretExpr(((DivideAst)expr).left, store) / interpretExpr(((DivideAst)expr).right, store);
      else throw new RuntimeException("Cannot divide by zero!");
+    }
+    else if(expr instanceof AndAst ) {
+      return and(interpretExpr(((AndAst)expr).left, store), interpretExpr(((AndAst)expr).right, store));
+    }
+    else if(expr instanceof OrAst ) {
+      return or(interpretExpr(((AndAst)expr).left, store), interpretExpr(((AndAst)expr).right, store));
     }
     else if(expr instanceof VariableAst) {
       return store.get(((VariableAst)expr).name);

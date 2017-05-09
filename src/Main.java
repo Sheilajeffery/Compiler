@@ -25,13 +25,19 @@ public class Main {
 		ArrayList<String> variables = new ArrayList (prog.vars());
 		System.out.println(variables);
 
+		HashMap<String,Type> env = new HashMap<String, Type>();
+		TypeCheck check = new TypeCheck();
+		check.typecheck(env, prog);
 
 
+
+/*
 		CodeGenerator gen = new CodeGenerator(prog, variables);
 		String mipsCode = "move $fp $sp \nsubi $sp $sp " + variables.size()*4 + "\n"
 								+  gen.codeGen(prog)
 								+ "move $sp $fp ";
 								System.out.println(mipsCode);
+								*/
 	}
 
 }

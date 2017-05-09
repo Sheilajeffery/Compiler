@@ -1,6 +1,29 @@
 abstract class Token {
 }
 
+class True extends Token{
+	public String toString(){
+		return "true";
+	}
+}
+
+class False extends Token{
+	public String toString(){
+		return "false";
+	}
+}
+
+class And extends Token{
+	public String toString(){
+		return "&&";
+	}
+}
+class Or extends Token{
+	public String toString(){
+		return "||";
+	}
+}
+
 class VarName extends Token {
 	public String toString() {
 		return "VarName(" + name + ")";
