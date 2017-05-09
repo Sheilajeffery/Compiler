@@ -13,7 +13,12 @@ public String codeGen(ExprAST e){
   if(e instanceof NumberAst){
   return "li $a0 " + ((NumberAst)e).value + "\n";
   }
-
+  if(e instanceof TrueAst){
+  return "li $a0 " + 1 + "\n";
+  }
+  if(e instanceof FalseAst){
+  return "li $a0 " + 0 + "\n";
+  }
   else if (e instanceof PlusAst){
     String left = codeGen(((PlusAst)e).left);
     String right = codeGen(((PlusAst)e).right);
@@ -60,8 +65,30 @@ public String codeGen(ExprAST e){
           + "addi $sp $sp 4\n"
           + "sub $a0 $a1 $a0\n";
   }
+  else if (e instanceof AndAst){
+    String left = codeGen(((AndAst)e).left);
+    String right = codeGen(((AndAst)e).right);
+    return left
+          + "\nsubi $sp $sp 4\n"
+          + "sw $a0 ($sp)\n"
+          + right
+          + "\nlw $a1 ($sp)\n"
+          + "addi $sp $sp 4\n"
+          + "and $a0 $a1 $a0\n";
+  }
+  else if (e instanceof OrAst){
+    String left = codeGen(((OrAst)e).left);
+    String right = codeGen(((OrAst)e).right);
+    return left
+          + "\nsubi $sp $sp 4\n"
+          + "sw $a0 ($sp)\n"
+          + right
+          + "\nlw $a1 ($sp)\n"
+          + "addi $sp $sp 4\n"
+          + "or $a0 $a1 $a0\n";
+  }
   else if (e instanceof VariableAst)
-  return "lw $a0 " +  vars.indexOf(((VariableAst)e).name)*4 + " ($fp)\n";
+  return "lw $a0 " +  vars.indexOf(((VariableAst)e).name)*4 + "($fp)\n";
   else return "ERROR";
 }
 

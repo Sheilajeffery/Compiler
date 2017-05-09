@@ -30,14 +30,12 @@ public class Main {
 		check.typecheck(env, prog);
 
 
-
-/*
-		CodeGenerator gen = new CodeGenerator(prog, variables);
+	CodeGenerator gen = new CodeGenerator(prog, variables);
 		String mipsCode = "move $fp $sp \nsubi $sp $sp " + variables.size()*4 + "\n"
 								+  gen.codeGen(prog)
 								+ "move $sp $fp ";
 								System.out.println(mipsCode);
-								*/
+								
 	}
 
 }

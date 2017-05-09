@@ -75,7 +75,7 @@ public class Interpreter {
       return and(interpretExpr(((AndAst)expr).left, store), interpretExpr(((AndAst)expr).right, store));
     }
     else if(expr instanceof OrAst ) {
-      return or(interpretExpr(((AndAst)expr).left, store), interpretExpr(((AndAst)expr).right, store));
+      return or(interpretExpr(((OrAst)expr).left, store), interpretExpr(((OrAst)expr).right, store));
     }
     else if(expr instanceof VariableAst) {
       return store.get(((VariableAst)expr).name);
