@@ -43,6 +43,19 @@ class TypeCheck{
           return new Int();
           else throw new TypeCheckException("Types don't match!");
         }
+    else if(e instanceof EqAst)
+        {
+          if((typecheck(env,((EqAst)e).left) instanceof Int && typecheck(env,((EqAst)e).right) instanceof Int)
+          || ((typecheck(env,((EqAst)e).left) instanceof Bool && typecheck(env,((EqAst)e).right) instanceof Bool)))
+          return new Bool();
+          else throw new TypeCheckException("Types don't match!");
+        }
+        else if(e instanceof LessThanAst)
+            {
+              if(typecheck(env,((LessThanAst)e).left) instanceof Int && typecheck(env,((LessThanAst)e).right) instanceof Int)
+                return new Bool();
+              else throw new TypeCheckException("Types don't match!");
+            }
     else if(e instanceof MinusAst)
         {
           if(typecheck(env,((MinusAst)e).left) instanceof Int && typecheck(env,((MinusAst)e).right) instanceof Int)

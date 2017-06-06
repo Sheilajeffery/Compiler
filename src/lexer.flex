@@ -20,6 +20,8 @@
 "}"				  { return new Rcurl(); }
 "||"        { return new Or(); }
 "&&"        { return new And(); }
+"=="        { return new Eq(); }
+"<"         { return new LessThan(); }
 [\ \t\b\f\r\n]+ { /* eat whitespace */ }
 "//"[^\n]*      { /* one-line comment */ }
 .               { throw new Error("Unexpected character ["+yytext()+"]"); }

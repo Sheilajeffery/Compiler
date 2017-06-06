@@ -18,7 +18,6 @@ public class Main {
 		Interpreter interpreter = new Interpreter();
 	 	store = interpreter.interpretCommand(prog, store);
 
-
 		System.out.println(store);
 
 

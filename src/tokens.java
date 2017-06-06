@@ -23,6 +23,16 @@ class Or extends Token{
 		return "||";
 	}
 }
+class Eq extends Token{
+	public String toString(){
+		return "==";
+	}
+}
+class LessThan extends Token{
+	public String toString(){
+		return "<";
+	}
+}
 
 class VarName extends Token {
 	public String toString() {
