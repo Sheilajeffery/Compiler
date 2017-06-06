@@ -227,7 +227,7 @@ class SeqAst extends CommandAST{
 		return first + " ; " + second;
 	}
 
-	public HashSet<String> vars(){ //aici
+	public HashSet<String> vars(){ 
 		HashSet vs = new HashSet<String>();
 		vs.addAll(this.first.vars());
 		vs.addAll(this.second.vars());

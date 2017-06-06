@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Interpreter {
 
-  public Integer and(Integer left, Integer right){
+/*  public BoolValue and(boolean left, boolean right){
     if(left == 0 && right == 0)
     return new Integer(0);
     else if((left == 0 && right == 1) || (left == 1 && right == 0))
@@ -21,11 +21,11 @@ public class Interpreter {
     return new Integer(1);
     return null;
   }
-
-  public HashMap<String, Integer> interpretCommand (CommandAST command, HashMap<String, Integer> initialStore )
+*/
+  public HashMap<String, Value> interpretCommand (CommandAST command, HashMap<String, Value> initialStore )
   {
     if(command instanceof SeqAst ) {
-      HashMap<String, Integer> newStore =
+      HashMap<String, Value> newStore =
         interpretCommand (((SeqAst)command).first, initialStore);
       return interpretCommand (((SeqAst)command).second, newStore);
     }
@@ -34,12 +34,12 @@ public class Interpreter {
       return initialStore;
     }
     else if(command instanceof WhileAst){
-      Integer n = interpretExpr( ((WhileAst)command).condition, initialStore);
-      if(n == 0) {
+      BoolValue n = (BoolValue)(interpretExpr( ((WhileAst)command).condition, initialStore));
+      if(n.value == false) {
         return initialStore;
       }
       else {
-        HashMap<String, Integer> newStore = interpretCommand(((WhileAst)command).body, initialStore);
+        HashMap<String, Value> newStore = interpretCommand(((WhileAst)command).body, initialStore);
         return interpretCommand(command, newStore);
       }
 
@@ -48,37 +48,40 @@ public class Interpreter {
 
   }
 
-  public Integer interpretExpr(ExprAST expr, HashMap<String, Integer> store){
+  public Value interpretExpr(ExprAST expr, HashMap<String, Value> store){
     if(expr instanceof NumberAst) {
-      return new Integer(((NumberAst)expr).value);
+      return new IntValue(((NumberAst)expr).value);
     }
     else if(expr instanceof TrueAst){
-      return new Integer(1);
+      return new BoolValue(true);
     }
     else if(expr instanceof FalseAst)
-      return new Integer(0);
+      return new BoolValue(false);
+
     else if(expr instanceof PlusAst ) {
-      return interpretExpr(((PlusAst)expr).left, store) + interpretExpr(((PlusAst)expr).right, store);
+      return new IntValue(((IntValue)interpretExpr(((PlusAst)expr).left, store)).value + ((IntValue)interpretExpr(((PlusAst)expr).right, store)).value ) ;
     }
     else if(expr instanceof MinusAst ) {
-      return interpretExpr(((MinusAst)expr).left, store) - interpretExpr(((MinusAst)expr).right, store);
+      return new IntValue(((IntValue)interpretExpr(((MinusAst)expr).left, store)).value - ((IntValue)interpretExpr(((MinusAst)expr).right, store)).value ) ;
     }
     else if(expr instanceof TimesAst ) {
-      return interpretExpr(((TimesAst)expr).left, store) * interpretExpr(((TimesAst)expr).right, store);
+      return new IntValue(((IntValue)interpretExpr(((TimesAst)expr).left, store)).value * ((IntValue)interpretExpr(((TimesAst)expr).right, store)).value ) ;
     }
     else if(expr instanceof DivideAst ) {
-      if(interpretExpr(((DivideAst)expr).right, store) !=0 )
-        return interpretExpr(((DivideAst)expr).left, store) / interpretExpr(((DivideAst)expr).right, store);
+      if(  ((IntValue)interpretExpr(((DivideAst)expr).right, store)).value !=0     )
+        return new IntValue(((IntValue)interpretExpr(((DivideAst)expr).left, store)).value / ((IntValue)interpretExpr(((DivideAst)expr).right, store)).value ) ;
      else throw new RuntimeException("Cannot divide by zero!");
     }
     else if(expr instanceof AndAst ) {
-      return and(interpretExpr(((AndAst)expr).left, store), interpretExpr(((AndAst)expr).right, store));
+      return new BoolValue( ((BoolValue)interpretExpr(((AndAst)expr).left, store)).value && ((BoolValue)interpretExpr(((AndAst)expr).right, store)).value );
     }
     else if(expr instanceof OrAst ) {
-      return or(interpretExpr(((OrAst)expr).left, store), interpretExpr(((OrAst)expr).right, store));
+      return new BoolValue( ((BoolValue)interpretExpr(((OrAst)expr).left, store)).value ||  ((BoolValue)interpretExpr(((OrAst)expr).right, store)).value );
     }
     else if(expr instanceof VariableAst) {
-      return store.get(((VariableAst)expr).name);
+
+     return store.get(((VariableAst)expr).name);
+
     }
     else throw new RuntimeException("Expression not recognised");
 

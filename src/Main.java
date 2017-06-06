@@ -12,7 +12,7 @@ public class Main {
 		CommandAST prog = (CommandAST) parser.parse().value;
 		System.out.println(prog);
 
-		HashMap<String, Integer> store = new HashMap<String, Integer>();
+		HashMap<String, Value> store = new HashMap<String, Value>();
 
 
 		Interpreter interpreter = new Interpreter();
@@ -35,7 +35,7 @@ public class Main {
 								+  gen.codeGen(prog)
 								+ "move $sp $fp ";
 								System.out.println(mipsCode);
-								
+
 	}
 
 }
