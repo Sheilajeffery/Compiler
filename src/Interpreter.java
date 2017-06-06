@@ -2,26 +2,6 @@ import java.util.HashMap;
 
 public class Interpreter {
 
-/*  public BoolValue and(boolean left, boolean right){
-    if(left == 0 && right == 0)
-    return new Integer(0);
-    else if((left == 0 && right == 1) || (left == 1 && right == 0))
-    return new Integer(0);
-    else if(left == 1 && right == 1)
-    return new Integer(1);
-    return null;
-  }
-
-  public Integer or(Integer left, Integer right){
-    if(left == 0 && right == 0)
-    return new Integer(0);
-    if((left == 0 && right == 1) || (left == 1 && right == 0))
-    return new Integer(1);
-    if(left == 1 && right == 1)
-    return new Integer(1);
-    return null;
-  }
-*/
   public HashMap<String, Value> interpretCommand (CommandAST command, HashMap<String, Value> initialStore )
   {
     if(command instanceof SeqAst ) {

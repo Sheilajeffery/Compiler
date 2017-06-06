@@ -29,11 +29,9 @@ public class Main {
 		check.typecheck(env, prog);
 
 
-	CodeGenerator gen = new CodeGenerator(prog, variables);
-		String mipsCode = "move $fp $sp \nsubi $sp $sp " + variables.size()*4 + "\n"
-								+  gen.codeGen(prog)
-								+ "move $sp $fp ";
-								System.out.println(mipsCode);
+		CodeGenerator gen = new CodeGenerator(variables);
+		String mipsCode = gen.codeGenWithPreamble(prog);
+		System.out.println(mipsCode);
 
 	}
 
