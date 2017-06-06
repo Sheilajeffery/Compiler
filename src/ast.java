@@ -22,6 +22,44 @@ class PlusAst extends ExprAST {
 	}
 }
 
+class EqAst extends ExprAST {
+	public ExprAST left;
+	public ExprAST right;
+
+	public EqAst(ExprAST left, ExprAST right) {
+		this.right = right;
+		this.left = left;
+	}
+	public String toString() {
+		return left + " == " + right;
+	}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.left.vars());
+		vs.addAll(this.right.vars());
+		return  vs;
+	}
+}
+
+	class LessThanAst extends ExprAST {
+		public ExprAST left;
+		public ExprAST right;
+
+		public LessThanAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " < " + right;
+		}
+	public HashSet<String> vars(){
+		HashSet vs = new HashSet<String>();
+		vs.addAll(this.left.vars());
+		vs.addAll(this.right.vars());
+		return  vs;
+	}
+}
+
 class TrueAst extends ExprAST{
 	public String toString() {
 		return "true";
@@ -227,7 +265,7 @@ class SeqAst extends CommandAST{
 		return first + " ; " + second;
 	}
 
-	public HashSet<String> vars(){ 
+	public HashSet<String> vars(){
 		HashSet vs = new HashSet<String>();
 		vs.addAll(this.first.vars());
 		vs.addAll(this.second.vars());

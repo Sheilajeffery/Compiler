@@ -30,6 +30,30 @@ public String codeGen(ExprAST e){
           + "addi $sp $sp 4\n"
           + "add $a0 $a0 $a1\n";
   }
+  else if (e instanceof EqAst){
+    String left = codeGen(((EqAst)e).left);
+    String right = codeGen(((EqAst)e).right);
+    return left
+          + "\nsubi $sp $sp 4\n"
+          + "sw $a0 ($sp)\n"
+          + right
+          + "lw $a1 ($sp)\n"
+          + "addi $sp $sp 4\n"
+          + "subu $a0 $a0 $a1\n"
+          + "sltu $a0 $zero $a0\n"
+          + "xori $a0 $a0 1 \n";
+  }
+  else if (e instanceof LessThanAst){
+    String left = codeGen(((LessThanAst)e).left);
+    String right = codeGen(((LessThanAst)e).right);
+    return left
+          + "\nsubi $sp $sp 4\n"
+          + "sw $a0 ($sp)\n"
+          + right
+          + "lw $a1 ($sp)\n"
+          + "addi $sp $sp 4\n"
+          + "slt $a0 $a1 $a0\n";
+  }
   else if (e instanceof TimesAst){
     String left = codeGen(((TimesAst)e).left);
     String right = codeGen(((TimesAst)e).right);

@@ -60,9 +60,10 @@ parser code {:
         return symbolFactory.newSymbol("",sym.FALSE);
       else if(next instanceof True)
         return symbolFactory.newSymbol("",sym.TRUE);
-
-
-
+      else if(next instanceof Eq)
+        return symbolFactory.newSymbol("",sym.EQ);
+      else if(next instanceof LessThan)
+        return symbolFactory.newSymbol("",sym.LESSTHAN);
       else throw new RuntimeException("Invalid token");
   }
 }
@@ -77,7 +78,7 @@ parser code {:
 init with {: :}
 scan with {: return scanner.next_token(); :}
 
-terminal PLUS, MINUS, LBR, RBR, LCURL, RCURL, SEMICOLON, ASSIGN, WHILE, DIVIDE, TIMES, TRUE, FALSE, AND, OR;
+terminal PLUS, MINUS, LBR, RBR, LCURL, RCURL, SEMICOLON, ASSIGN, WHILE, DIVIDE, TIMES, TRUE, FALSE, AND, OR, EQ,LESSTHAN;
 terminal String VARNAME;
 terminal Integer NUMBER;
 
@@ -91,14 +92,16 @@ c ::= VARNAME:name ASSIGN e:expr {: RESULT = new AssignAst(name, expr); :}
     | c:first SEMICOLON c:second {: RESULT = new SeqAst(first, second); :}
     ;
 
-e ::= NUMBER:num              {: RESULT = new NumberAst(num);           :}
-    | VARNAME:name            {: RESULT = new VariableAst(name);        :}
-    | e:expr1 PLUS e:expr2    {: RESULT = new PlusAst(expr1, expr2);    :}
-    | e:expr1 MINUS e:expr2   {: RESULT = new MinusAst(expr1, expr2);   :}
-    | e:expr1 TIMES e:expr2   {: RESULT = new TimesAst(expr1, expr2);   :}
-    | e:expr1 DIVIDE e:expr2  {: RESULT = new DivideAst(expr1, expr2);  :}
-    | e:expr1 AND e:expr2     {: RESULT = new AndAst(expr1, expr2);     :}
-    | e:expr1 OR e:expr2      {: RESULT = new OrAst(expr1, expr2);      :}
-    | TRUE                    {: RESULT = new TrueAst();                :}
-    | FALSE                   {: RESULT = new FalseAst();               :}
+e ::= NUMBER:num                {: RESULT = new NumberAst(num);           :}
+    | VARNAME:name              {: RESULT = new VariableAst(name);        :}
+    | e:expr1 LESSTHAN e:expr2  {: RESULT = new LessThanAst(expr1, expr2);:}
+    | e:expr1 EQ e:expr2        {: RESULT = new EqAst(expr1, expr2);      :}
+    | e:expr1 PLUS e:expr2      {: RESULT = new PlusAst(expr1, expr2);    :}
+    | e:expr1 MINUS e:expr2     {: RESULT = new MinusAst(expr1, expr2);   :}
+    | e:expr1 TIMES e:expr2     {: RESULT = new TimesAst(expr1, expr2);   :}
+    | e:expr1 DIVIDE e:expr2    {: RESULT = new DivideAst(expr1, expr2);  :}
+    | e:expr1 AND e:expr2       {: RESULT = new AndAst(expr1, expr2);     :}
+    | e:expr1 OR e:expr2        {: RESULT = new OrAst(expr1, expr2);      :}
+    | TRUE                      {: RESULT = new TrueAst();                :}
+    | FALSE                     {: RESULT = new FalseAst();               :}
     ;

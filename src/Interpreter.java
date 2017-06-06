@@ -61,6 +61,15 @@ public class Interpreter {
     else if(expr instanceof PlusAst ) {
       return new IntValue(((IntValue)interpretExpr(((PlusAst)expr).left, store)).value + ((IntValue)interpretExpr(((PlusAst)expr).right, store)).value ) ;
     }
+    else if(expr instanceof EqAst ) {
+      if(interpretExpr(((EqAst)expr).left, store) instanceof IntValue)
+        return new BoolValue(((IntValue)interpretExpr(((EqAst)expr).left, store)).value == ((IntValue)interpretExpr(((EqAst)expr).right, store)).value ) ;
+      else
+        return new BoolValue(((BoolValue)interpretExpr(((EqAst)expr).left, store)).value == ((BoolValue)interpretExpr(((EqAst)expr).right, store)).value ) ;
+    }
+    else if(expr instanceof LessThanAst ) {
+      return new BoolValue(((IntValue)interpretExpr(((LessThanAst)expr).left, store)).value < ((IntValue)interpretExpr(((LessThanAst)expr).right, store)).value ) ;
+    }
     else if(expr instanceof MinusAst ) {
       return new IntValue(((IntValue)interpretExpr(((MinusAst)expr).left, store)).value - ((IntValue)interpretExpr(((MinusAst)expr).right, store)).value ) ;
     }

@@ -1,4 +1,2 @@
-x:=true;y:=false;
-z:=x || y;
-a:=12; b:=8;
-a:=a+b
+x:=5;y:=5;
+z:= y==x
