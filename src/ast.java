@@ -189,6 +189,20 @@ class NumberAst extends ExprAST {
 	}
 }
 
+class UnaryMinusAst extends ExprAST {
+	public ExprAST e;
+
+	public UnaryMinusAst(ExprAST e) {
+		this.e = e;
+	}
+	public String toString() {
+		return "-" + e;
+	}
+	public HashSet<String> vars(){
+		return  new HashSet<String>();
+	}
+}
+
 class VariableAst extends ExprAST {
 	public String name;
 

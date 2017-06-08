@@ -32,7 +32,7 @@ parser code {:
           return symbolFactory.newSymbol("", sym.MINUS);
       else if (next instanceof Times)
             return symbolFactory.newSymbol("", sym.TIMES);
-      else if (next instanceof Divide)
+      else if(next instanceof Divide)
             return symbolFactory.newSymbol("", sym.DIVIDE);
       else if(next instanceof While)
             return symbolFactory.newSymbol("",sym.WHILE);
@@ -101,6 +101,8 @@ e ::= NUMBER:num                {: RESULT = new NumberAst(num);           :}
     | e:expr1 TIMES e:expr2     {: RESULT = new TimesAst(expr1, expr2);   :}
     | e:expr1 DIVIDE e:expr2    {: RESULT = new DivideAst(expr1, expr2);  :}
     | e:expr1 AND e:expr2       {: RESULT = new AndAst(expr1, expr2);     :}
+    | LBR e:expr RBR            {: RESULT = expr ;                        :}
+    | MINUS e:expr              {: RESULT = new UnaryMinusAst(expr);      :}
     | e:expr1 OR e:expr2        {: RESULT = new OrAst(expr1, expr2);      :}
     | TRUE                      {: RESULT = new TrueAst();                :}
     | FALSE                     {: RESULT = new FalseAst();               :}

@@ -12,9 +12,11 @@ public class Main {
 		CommandAST prog = (CommandAST) parser.parse().value;
 		System.out.println(prog);
 
+		HashMap<String,Type> environment = new HashMap<String, Type>();
+		TypeCheck check = new TypeCheck();
+		check.typecheck(environment, prog);
+
 		HashMap<String, Value> store = new HashMap<String, Value>();
-
-
 		Interpreter interpreter = new Interpreter();
 	 	store = interpreter.interpretCommand(prog, store);
 
@@ -24,9 +26,7 @@ public class Main {
 		ArrayList<String> variables = new ArrayList (prog.vars());
 		System.out.println(variables);
 
-		HashMap<String,Type> env = new HashMap<String, Type>();
-		TypeCheck check = new TypeCheck();
-		check.typecheck(env, prog);
+
 
 
 		CodeGenerator gen = new CodeGenerator(variables);

@@ -32,12 +32,15 @@ public class Interpreter {
     if(expr instanceof NumberAst) {
       return new IntValue(((NumberAst)expr).value);
     }
-    else if(expr instanceof TrueAst){
+    else if(expr instanceof TrueAst) {
       return new BoolValue(true);
     }
-    else if(expr instanceof FalseAst)
+    else if(expr instanceof FalseAst) {
       return new BoolValue(false);
-
+    }
+    if(expr instanceof UnaryMinusAst) {
+      return new IntValue( -((IntValue)interpretExpr(((UnaryMinusAst)expr).e, store)).value);
+    }
     else if(expr instanceof PlusAst ) {
       return new IntValue(((IntValue)interpretExpr(((PlusAst)expr).left, store)).value + ((IntValue)interpretExpr(((PlusAst)expr).right, store)).value ) ;
     }

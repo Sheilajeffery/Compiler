@@ -87,6 +87,10 @@ public class CodeGenerator {
             + "addi $sp $sp 4\n"
             + "sub $a0 $a1 $a0\n";
     }
+    else if (e instanceof UnaryMinusAst ) {
+      return codeGen( new MinusAst(new NumberAst(0), ((UnaryMinusAst)e).e));
+    }
+
     else if (e instanceof AndAst){
       String left = codeGen(((AndAst)e).left);
       String right = codeGen(((AndAst)e).right);
@@ -137,7 +141,8 @@ public class CodeGenerator {
   }
 
   public String codeGenWithPreamble(CommandAST c) {
-    return "move $fp $sp \nsubi $sp $sp " + vars.size()*4 + "\n"
+    return  "\n.data\n\n.text\n"
+            + "move $fp $sp \nsubi $sp $sp " + vars.size()*4 + "\n"
             +  codeGen(c)
             + "move $sp $fp ";
   }

@@ -1,11 +1,12 @@
 import java.util.HashMap;
 class TypeCheck{
 
-  //HashMap<String,Type> env = new HashMap<String, Type>();
 
   void typecheck(HashMap<String,Type> env, CommandAST c) throws TypeCheckException {
     if(c instanceof WhileAst)
-      { typecheck(env,((WhileAst)c).condition);
+      {
+        if (! (typecheck(env,((WhileAst)c).condition) instanceof Bool))
+              throw new TypeCheckException("The while condition must be a boolean!");
         typecheck(env,((WhileAst)c).body);
       }
     else if(c instanceof AssignAst)
@@ -42,6 +43,12 @@ class TypeCheck{
           if(typecheck(env,((PlusAst)e).left) instanceof Int && typecheck(env,((PlusAst)e).right) instanceof Int)
           return new Int();
           else throw new TypeCheckException("Types don't match!");
+        }
+    else if(e instanceof UnaryMinusAst)
+        { if(typecheck(env,((UnaryMinusAst)e).e) instanceof Int)
+          return new Int();
+          else
+           throw new TypeCheckException("Types don't match!");
         }
     else if(e instanceof EqAst)
         {
