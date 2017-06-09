@@ -8,8 +8,8 @@ public class CodeGenerator {
     this.vars = vars;
     this.loopCounter = 0;
   }
-  public String generateLabel(){
-    return "label" + loopCounter;
+  public String generateLoopLabel(){
+    return "loop" + loopCounter;
   }
   public String generateEndLabel(){
     return "end"+loopCounter;
@@ -29,7 +29,7 @@ public class CodeGenerator {
       String left = codeGen(((PlusAst)e).left);
       String right = codeGen(((PlusAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "lw $a1 ($sp)\n"
@@ -40,7 +40,7 @@ public class CodeGenerator {
       String left = codeGen(((EqAst)e).left);
       String right = codeGen(((EqAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "lw $a1 ($sp)\n"
@@ -53,7 +53,7 @@ public class CodeGenerator {
       String left = codeGen(((LessThanAst)e).left);
       String right = codeGen(((LessThanAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "lw $a1 ($sp)\n"
@@ -64,7 +64,7 @@ public class CodeGenerator {
       String left = codeGen(((TimesAst)e).left);
       String right = codeGen(((TimesAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "\nlw $a1 ($sp)\n"
@@ -76,7 +76,7 @@ public class CodeGenerator {
       String left = codeGen(((DivideAst)e).left);
       String right = codeGen(((DivideAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "lw $a1 ($sp)\n"
@@ -88,7 +88,7 @@ public class CodeGenerator {
       String left = codeGen(((MinusAst)e).left);
       String right = codeGen(((MinusAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "\nlw $a1 ($sp)\n"
@@ -103,7 +103,7 @@ public class CodeGenerator {
       String left = codeGen(((AndAst)e).left);
       String right = codeGen(((AndAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "\nlw $a1 ($sp)\n"
@@ -114,7 +114,7 @@ public class CodeGenerator {
       String left = codeGen(((OrAst)e).left);
       String right = codeGen(((OrAst)e).right);
       return left
-            + "\nsubi $sp $sp 4\n"
+            + "subi $sp $sp 4\n"
             + "sw $a0 ($sp)\n"
             + right
             + "\nlw $a1 ($sp)\n"
@@ -132,20 +132,20 @@ public class CodeGenerator {
     }
     else if(c instanceof WhileAst) {
       this.loopCounter++;
-      String label =  generateLabel();
+      String loopLabel =  generateLoopLabel();
       String endLabel = generateEndLabel();
-      return label + ":\n"
+      return loopLabel + ":\n"
             + codeGen(((WhileAst)c).condition)
             + "beqz $a0 "+ endLabel + "\n"
             + codeGen(((WhileAst)c).body)
-            + "j "+ label + "\n"
+            + "j "+ loopLabel + "\n"
             + endLabel + ":";
     }
     else if (c instanceof AssignAst) {
       return codeGen(((AssignAst)c).expr)
             + "sw $a0 "
             + vars.indexOf(((AssignAst)c).name)*4
-            + "($fp)\n";
+            + "($fp)";
     }
     else throw new RuntimeException("codeGen not implemented for " + c.getClass().getName());
   }
