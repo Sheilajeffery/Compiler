@@ -2,9 +2,17 @@ import java.util.*;
 
 public class CodeGenerator {
   ArrayList<String> vars;
+  int loopCounter;
 
   public CodeGenerator(ArrayList<String> vars) {
     this.vars = vars;
+    this.loopCounter = 0;
+  }
+  public String generateLabel(){
+    return "label" + loopCounter;
+  }
+  public String generateEndLabel(){
+    return "end"+loopCounter;
   }
 
   public String codeGen(ExprAST e){
@@ -123,13 +131,15 @@ public class CodeGenerator {
       return codeGen(((SeqAst)c).first) + "\n" + codeGen(((SeqAst)c).second);
     }
     else if(c instanceof WhileAst) {
-      return "loop:\n"
+      this.loopCounter++;
+      String label =  generateLabel();
+      String endLabel = generateEndLabel();
+      return label + ":\n"
             + codeGen(((WhileAst)c).condition)
-            + "beqz $a0 end\n"
-            + "body:\n"
+            + "beqz $a0 "+ endLabel + "\n"
             + codeGen(((WhileAst)c).body)
-            + "j loop\n"
-            + "end:";
+            + "j "+ label + "\n"
+            + endLabel + ":";
     }
     else if (c instanceof AssignAst) {
       return codeGen(((AssignAst)c).expr)
@@ -142,7 +152,8 @@ public class CodeGenerator {
 
   public String codeGenWithPreamble(CommandAST c) {
     return  "\n.data\n\n.text\n"
-            + "move $fp $sp \nsubi $sp $sp " + vars.size()*4 + "\n"
+            + "move $fp $sp \n"
+            + "subi $sp $sp " + vars.size()*4 + "\n"
             +  codeGen(c)
             + "move $sp $fp ";
   }
