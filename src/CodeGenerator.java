@@ -2,17 +2,17 @@ import java.util.*;
 
 public class CodeGenerator {
   ArrayList<String> vars;
-  int loopCounter;
+  int numberOfWhiles;
 
   public CodeGenerator(ArrayList<String> vars) {
     this.vars = vars;
-    this.loopCounter = 0;
+    this.numberOfWhiles = 0;
   }
   public String generateLoopLabel(){
-    return "loop" + loopCounter;
+    return "loop" + numberOfWhiles;
   }
   public String generateEndLabel(){
-    return "end"+loopCounter;
+    return "end"+numberOfWhiles;
   }
 
   public String codeGen(ExprAST e){
@@ -131,7 +131,7 @@ public class CodeGenerator {
       return codeGen(((SeqAst)c).first) + "\n" + codeGen(((SeqAst)c).second);
     }
     else if(c instanceof WhileAst) {
-      this.loopCounter++;
+      this.numberOfWhiles++;
       String loopLabel =  generateLoopLabel();
       String endLabel = generateEndLabel();
       return loopLabel + ":\n"

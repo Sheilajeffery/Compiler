@@ -54,8 +54,13 @@ public class Test {
 
     HashMap<String, Value> loopsExpected = new HashMap<>();
     loopsExpected.put("x", new IntValue(100));
-    loopsExpected.put("y", new IntValue(50));    
+    loopsExpected.put("y", new IntValue(50));
     test.testExample("examples/loops", loopsExpected);
+
+    HashMap<String, Value> moreLoopsExpected = new HashMap<>();
+    moreLoopsExpected.put("y", new IntValue(10));
+    moreLoopsExpected.put("z", new IntValue(10));
+    test.testExample("examples/moreloops", moreLoopsExpected);
 
 
     test.printState();

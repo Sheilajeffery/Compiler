@@ -1,5 +1,6 @@
 import java_cup.runtime.*;
-import java.io.FileReader;
+//import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,12 +27,16 @@ public class Main {
 		ArrayList<String> variables = new ArrayList (prog.vars());
 		System.out.println(variables);
 
-
-
-
 		CodeGenerator gen = new CodeGenerator(variables);
 		String mipsCode = gen.codeGenWithPreamble(prog);
-		System.out.println(mipsCode);
+
+
+		try {
+			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("out.asm"), "utf-8"));
+			writer.write(mipsCode);
+			writer.close();
+		}
+		catch(IOException e){}
 
 	}
 

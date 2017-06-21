@@ -2,3 +2,4 @@ bin/
 src/Lexer.java
 src/sym.java
 src/Parser.java
+asm.out
