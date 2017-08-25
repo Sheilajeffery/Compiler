@@ -36,7 +36,7 @@ public class Main {
 			writer.write(mipsCode);
 			writer.close();
 		}
-		catch(IOException e){}
+		catch(IOException e) {}
 
 	}
 

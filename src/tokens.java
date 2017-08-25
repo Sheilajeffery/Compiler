@@ -1,35 +1,35 @@
 abstract class Token {
 }
 
-class True extends Token{
-	public String toString(){
+class True extends Token {
+	public String toString() {
 		return "true";
 	}
 }
 
-class False extends Token{
-	public String toString(){
+class False extends Token {
+	public String toString() {
 		return "false";
 	}
 }
 
-class And extends Token{
-	public String toString(){
+class And extends Token {
+	public String toString() {
 		return "&&";
 	}
 }
-class Or extends Token{
-	public String toString(){
+class Or extends Token {
+	public String toString() {
 		return "||";
 	}
 }
-class Eq extends Token{
-	public String toString(){
+class Eq extends Token {
+	public String toString() {
 		return "==";
 	}
 }
-class LessThan extends Token{
-	public String toString(){
+class LessThan extends Token {
+	public String toString() {
 		return "<";
 	}
 }

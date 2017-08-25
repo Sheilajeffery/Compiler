@@ -4,74 +4,75 @@ import java.io.InputStreamReader;
 
 parser code {:
 
-  class MyScanner implements Scanner{
+    class MyScanner implements Scanner {
 
-    private Lexer lexer;
-    private SymbolFactory symbolFactory;
+        private Lexer lexer;
+        private SymbolFactory symbolFactory;
 
-    public MyScanner(Lexer lexer, SymbolFactory sf) {
-        this.lexer = lexer;
-        this.symbolFactory = sf;
-    }
+        public MyScanner(Lexer lexer, SymbolFactory sf) {
+            this.lexer = lexer;
+            this.symbolFactory = sf;
+        }
 
 
-  public Symbol next_token(){
-    Token next;
-    try{
-      next = lexer.yylex();
-    }
-      catch(Exception e){
-        throw new RuntimeException("Invalid token!");
-      }
+        public Symbol next_token() {
+            Token next;
+            try {
+                next = lexer.yylex();
+            }
+            catch(Exception e) {
+                throw new RuntimeException("Invalid token!");
+              }
 
-      if(next == null)
-          return symbolFactory.newSymbol("", sym.EOF);
-      else if(next instanceof Plus)
-          return symbolFactory.newSymbol("", sym.PLUS);
-      else if(next instanceof Minus)
-          return symbolFactory.newSymbol("", sym.MINUS);
-      else if (next instanceof Times)
-            return symbolFactory.newSymbol("", sym.TIMES);
-      else if(next instanceof Divide)
-            return symbolFactory.newSymbol("", sym.DIVIDE);
-      else if(next instanceof While)
-            return symbolFactory.newSymbol("",sym.WHILE);
-      else if(next instanceof VarName)
-          return symbolFactory.newSymbol("",sym.VARNAME, ((VarName)next).name);
-      else if(next instanceof Lbr)
-          return symbolFactory.newSymbol("",sym.LBR);
-      else if(next instanceof Rbr)
-          return symbolFactory.newSymbol("",sym.RBR);
-      else if(next instanceof Rcurl)
-          return symbolFactory.newSymbol("",sym.RCURL);
-      else if(next instanceof Lcurl)
-        return symbolFactory.newSymbol("",sym.LCURL);
-      else if(next instanceof Semicolon)
-        return symbolFactory.newSymbol("",sym.SEMICOLON);
-      else if(next instanceof Assign)
-        return symbolFactory.newSymbol("",sym.ASSIGN);
-      else if(next instanceof Number)
-        return symbolFactory.newSymbol("",sym.NUMBER,((Number)next).value);
-      else if(next instanceof And)
-        return symbolFactory.newSymbol("",sym.AND);
-      else if(next instanceof Or)
-        return symbolFactory.newSymbol("",sym.OR);
-      else if(next instanceof False)
-        return symbolFactory.newSymbol("",sym.FALSE);
-      else if(next instanceof True)
-        return symbolFactory.newSymbol("",sym.TRUE);
-      else if(next instanceof Eq)
-        return symbolFactory.newSymbol("",sym.EQ);
-      else if(next instanceof LessThan)
-        return symbolFactory.newSymbol("",sym.LESSTHAN);
-      else throw new RuntimeException("Invalid token");
-  }
-}
-    private MyScanner scanner;
+              if(next == null)
+                  return symbolFactory.newSymbol("", sym.EOF);
+              else if(next instanceof Plus)
+                  return symbolFactory.newSymbol("", sym.PLUS);
+              else if(next instanceof Minus)
+                  return symbolFactory.newSymbol("", sym.MINUS);
+              else if (next instanceof Times)
+                    return symbolFactory.newSymbol("", sym.TIMES);
+              else if(next instanceof Divide)
+                    return symbolFactory.newSymbol("", sym.DIVIDE);
+              else if(next instanceof While)
+                    return symbolFactory.newSymbol("",sym.WHILE);
+              else if(next instanceof VarName)
+                  return symbolFactory.newSymbol("",sym.VARNAME, ((VarName)next).name);
+              else if(next instanceof Lbr)
+                  return symbolFactory.newSymbol("",sym.LBR);
+              else if(next instanceof Rbr)
+                  return symbolFactory.newSymbol("",sym.RBR);
+              else if(next instanceof Rcurl)
+                  return symbolFactory.newSymbol("",sym.RCURL);
+              else if(next instanceof Lcurl)
+                return symbolFactory.newSymbol("",sym.LCURL);
+              else if(next instanceof Semicolon)
+                return symbolFactory.newSymbol("",sym.SEMICOLON);
+              else if(next instanceof Assign)
+                return symbolFactory.newSymbol("",sym.ASSIGN);
+              else if(next instanceof Number)
+                return symbolFactory.newSymbol("",sym.NUMBER,((Number)next).value);
+              else if(next instanceof And)
+                return symbolFactory.newSymbol("",sym.AND);
+              else if(next instanceof Or)
+                return symbolFactory.newSymbol("",sym.OR);
+              else if(next instanceof False)
+                return symbolFactory.newSymbol("",sym.FALSE);
+              else if(next instanceof True)
+                return symbolFactory.newSymbol("",sym.TRUE);
+              else if(next instanceof Eq)
+                return symbolFactory.newSymbol("",sym.EQ);
+              else if(next instanceof LessThan)
+                return symbolFactory.newSymbol("",sym.LESSTHAN);
+              else throw new RuntimeException("Invalid token");
+            }
+        }
 
-    public Parser(Lexer lexer) {
-        this.scanner = new MyScanner(lexer, new DefaultSymbolFactory());
-    }
+        private MyScanner scanner;
+
+        public Parser(Lexer lexer) {
+            this.scanner = new MyScanner(lexer, new DefaultSymbolFactory());
+        }
 
 :};
 

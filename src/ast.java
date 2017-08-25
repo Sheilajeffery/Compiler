@@ -1,45 +1,45 @@
 import java.util.*;
-abstract class ExprAST {
-	public abstract HashSet<String> vars();
-}
+	abstract class ExprAST {
+		public abstract HashSet<String> vars();
+	}
 
-class PlusAst extends ExprAST {
-	public ExprAST left;
-	public ExprAST right;
+	class PlusAst extends ExprAST {
+		public ExprAST left;
+		public ExprAST right;
 
-	public PlusAst(ExprAST left, ExprAST right) {
-		this.right = right;
-		this.left = left;
+		public PlusAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " + " + right;
+		}
+		public HashSet<String> vars(){
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
 	}
-	public String toString() {
-		return left + " + " + right;
-	}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.left.vars());
-		vs.addAll(this.right.vars());
-		return  vs;
-	}
-}
 
-class EqAst extends ExprAST {
-	public ExprAST left;
-	public ExprAST right;
+	class EqAst extends ExprAST {
+		public ExprAST left;
+		public ExprAST right;
 
-	public EqAst(ExprAST left, ExprAST right) {
-		this.right = right;
-		this.left = left;
+		public EqAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " == " + right;
+		}
+		public HashSet<String> vars(){
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
 	}
-	public String toString() {
-		return left + " == " + right;
-	}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.left.vars());
-		vs.addAll(this.right.vars());
-		return  vs;
-	}
-}
 
 	class LessThanAst extends ExprAST {
 		public ExprAST left;
@@ -52,28 +52,28 @@ class EqAst extends ExprAST {
 		public String toString() {
 			return left + " < " + right;
 		}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.left.vars());
-		vs.addAll(this.right.vars());
-		return  vs;
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
 	}
-}
 
-class TrueAst extends ExprAST{
-	public String toString() {
-		return "true";
+	class TrueAst extends ExprAST {
+		public String toString() {
+			return "true";
+			}
+		public HashSet<String> vars() {
+			return new HashSet<String>();
+			}
 		}
-	public HashSet<String> vars(){
-		return new HashSet<String>();
-		}
-	}
 
 	class FalseAst extends ExprAST{
 		public String toString() {
 			return "false";
-			}
-		public HashSet<String> vars(){
+		}
+		public HashSet<String> vars() {
 			return new HashSet<String>();
 			}
 		}
@@ -89,7 +89,7 @@ class TrueAst extends ExprAST{
 		public String toString() {
 			return left + " && " + right;
 		}
-		public HashSet<String> vars(){
+		public HashSet<String> vars() {
 			HashSet vs = new HashSet<String>();
 			vs.addAll(this.left.vars());
 			vs.addAll(this.right.vars());
@@ -97,7 +97,7 @@ class TrueAst extends ExprAST{
 		}
 	}
 
-	class OrAst extends ExprAST{
+	class OrAst extends ExprAST {
 		public ExprAST left;
 		public ExprAST right;
 
@@ -108,7 +108,7 @@ class TrueAst extends ExprAST{
 		public String toString() {
 			return left + " || " + right;
 		}
-		public HashSet<String> vars(){
+		public HashSet<String> vars() {
 			HashSet vs = new HashSet<String>();
 			vs.addAll(this.left.vars());
 			vs.addAll(this.right.vars());
@@ -117,173 +117,173 @@ class TrueAst extends ExprAST{
 	}
 
 
-class MinusAst extends ExprAST {
-	public ExprAST left;
-	public ExprAST right;
+	class MinusAst extends ExprAST {
+		public ExprAST left;
+		public ExprAST right;
 
-	public MinusAst(ExprAST left, ExprAST right) {
-		this.right = right;
-		this.left = left;
+		public MinusAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " - " + right;
+		}
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
 	}
-	public String toString() {
-		return left + " - " + right;
-	}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.left.vars());
-		vs.addAll(this.right.vars());
-		return  vs;
-	}
-}
 
-class TimesAst extends ExprAST{
-	public ExprAST left;
-	public ExprAST right;
+	class TimesAst extends ExprAST {
+		public ExprAST left;
+		public ExprAST right;
 
-	public TimesAst(ExprAST left, ExprAST right) {
-		this.right = right;
-		this.left = left;
+		public TimesAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " * " + right;
+		}
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
 	}
-	public String toString() {
-		return left + " * " + right;
-	}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.left.vars());
-		vs.addAll(this.right.vars());
-		return  vs;
-	}
-}
 
-class DivideAst extends ExprAST{
-	public ExprAST left;
-	public ExprAST right;
+	class DivideAst extends ExprAST {
+		public ExprAST left;
+		public ExprAST right;
 
-	public DivideAst(ExprAST left, ExprAST right) {
-		this.right = right;
-		this.left = left;
+		public DivideAst(ExprAST left, ExprAST right) {
+			this.right = right;
+			this.left = left;
+		}
+		public String toString() {
+			return left + " / " + right;
+		}
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.left.vars());
+			vs.addAll(this.right.vars());
+			return  vs;
+		}
 	}
-	public String toString() {
-		return left + " / " + right;
-	}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.left.vars());
-		vs.addAll(this.right.vars());
-		return  vs;
-	}
-}
 
 
-class NumberAst extends ExprAST {
-	public int value;
+	class NumberAst extends ExprAST {
+		public int value;
 
-	public NumberAst(int value) {
-		this.value = value;
+		public NumberAst(int value) {
+			this.value = value;
+		}
+		public String toString() {
+			return value + "";
+		}
+		public HashSet<String> vars() {
+			return  new HashSet<String>();
+		}
 	}
-	public String toString() {
-		return value + "";
-	}
-	public HashSet<String> vars(){
-		return  new HashSet<String>();
-	}
-}
 
-class UnaryMinusAst extends ExprAST {
-	public ExprAST e;
+	class UnaryMinusAst extends ExprAST {
+		public ExprAST e;
 
-	public UnaryMinusAst(ExprAST e) {
-		this.e = e;
+		public UnaryMinusAst(ExprAST e) {
+			this.e = e;
+		}
+		public String toString() {
+			return "-" + e;
+		}
+		public HashSet<String> vars() {
+			return  new HashSet<String>();
+		}
 	}
-	public String toString() {
-		return "-" + e;
-	}
-	public HashSet<String> vars(){
-		return  new HashSet<String>();
-	}
-}
 
-class VariableAst extends ExprAST {
-	public String name;
+	class VariableAst extends ExprAST {
+		public String name;
 
-	public VariableAst(String name) {
-		this.name = name;
+		public VariableAst(String name) {
+			this.name = name;
+		}
+		public String toString() {
+			return name;
+		}
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.add(this.name);
+			return vs;
+		}
 	}
-	public String toString() {
-		return name;
-	}
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.add(this.name);
-		return vs;
-	}
-}
 
 // _____________ COMMANDS _________________
 
-abstract class CommandAST{
-	public abstract HashSet<String> vars();
-}
-
-class WhileAst extends CommandAST{
-	public ExprAST condition;
-	public CommandAST body;
-
-	public WhileAst(ExprAST condition, CommandAST body){
-		this.condition = condition;
-		this.body = body;
-	}
-	public String toString() {
-		return "while (" + condition + ") {" + body + "}";
+	abstract class CommandAST {
+		public abstract HashSet<String> vars();
 	}
 
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.condition.vars());
-		vs.addAll(this.body.vars());
-		return vs;
+	class WhileAst extends CommandAST {
+		public ExprAST condition;
+		public CommandAST body;
+
+		public WhileAst(ExprAST condition, CommandAST body) {
+			this.condition = condition;
+			this.body = body;
+		}
+		public String toString() {
+			return "while (" + condition + ") {" + body + "}";
+		}
+
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.condition.vars());
+			vs.addAll(this.body.vars());
+			return vs;
+		}
+
+
+	}
+	class AssignAst extends CommandAST {
+		public String  name;
+		public ExprAST expr;
+
+		public AssignAst(String name, ExprAST expr) {
+			this.name = name;
+			this.expr = expr;
+		}
+		public String toString() {
+			return name + " := " + expr;
+		}
+
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.expr.vars());
+			vs.add(this.name);
+			return vs;
+		}
+
 	}
 
+	class SeqAst extends CommandAST {
+		public CommandAST first;
+		public CommandAST second;
 
-}
-class AssignAst extends CommandAST{
-	public String  name;
-	public ExprAST expr;
+		public SeqAst(CommandAST first, CommandAST second) {
+			this.first = first;
+			this.second = second;
+		}
+		public String toString() {
+			return first + " ; " + second;
+		}
 
-	public AssignAst(String name, ExprAST expr) {
-		this.name = name;
-		this.expr = expr;
+		public HashSet<String> vars() {
+			HashSet vs = new HashSet<String>();
+			vs.addAll(this.first.vars());
+			vs.addAll(this.second.vars());
+			return vs;
+		}
+
 	}
-	public String toString() {
-		return name + " := " + expr;
-	}
-
-	public HashSet<String> vars(){ //aici
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.expr.vars());
-		vs.add(this.name);
-		return vs;
-	}
-
-}
-
-class SeqAst extends CommandAST{
-	public CommandAST first;
-	public CommandAST second;
-
-	public SeqAst(CommandAST first, CommandAST second) {
-		this.first = first;
-		this.second = second;
-	}
-	public String toString() {
-		return first + " ; " + second;
-	}
-
-	public HashSet<String> vars(){
-		HashSet vs = new HashSet<String>();
-		vs.addAll(this.first.vars());
-		vs.addAll(this.second.vars());
-		return vs;
-	}
-
-}
