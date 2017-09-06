@@ -1,3 +1,6 @@
+/**
+    Token classes for all the lexical units in the language
+*/
 abstract class Token {
 }
 

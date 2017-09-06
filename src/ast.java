@@ -1,3 +1,9 @@
+/*
+This is the abstract class for expression ASTs.
+The abstract method vars returns a hashset of variable names used
+in the Expression. To be used in the main class for keeping track of variables.
+*/
+
 import java.util.*;
 	abstract class ExprAST {
 		public abstract HashSet<String> vars();
@@ -220,6 +226,12 @@ import java.util.*;
 	}
 
 // _____________ COMMANDS _________________
+
+/*
+This is the abstract class for command ASTs.
+The abstract method vars returns a hashset of variable names used
+in the Expression. To be used in the main class for keeping track of variables.
+*/
 
 	abstract class CommandAST {
 		public abstract HashSet<String> vars();

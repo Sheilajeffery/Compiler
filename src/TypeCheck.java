@@ -1,6 +1,16 @@
 import java.util.HashMap;
 
 class TypeCheck{
+    /** Input:  env which is a HaspMap that maps variable names to Types
+                c which is the CommandAST (the input program)
+        Output: void / throws TypeCheckException if typecheck fails
+
+        The method enrures that the input program is type safe:
+         - while condition is boolean
+         - assign allowed only between variales of the same type
+         - type safe in sequence
+
+    */
 
     void typecheck(HashMap<String,Type> env, CommandAST c) throws TypeCheckException {
         if(c instanceof WhileAst) {
@@ -28,7 +38,17 @@ class TypeCheck{
         }
     }
 
-//TYPECHECK FOR EXPRESSIONS
+
+/** TYPECHECK FOR EXPRESSIONS
+    Input:  env which is a HaspMap that maps variable names to Types
+            e which is a ExprAST that contains the expression to be typechecked
+    Output: the type of the expression
+          / throws TypeCheckException if typecheck fails
+
+    The method enrures that the input program is type safe:
+     - returns the type of variables : Int / Bool
+     - operations allowed only between same type variables
+*/
 
     Type typecheck(HashMap<String,Type> env, ExprAST e) throws TypeCheckException {
         if(e instanceof VariableAst)

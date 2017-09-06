@@ -1,3 +1,8 @@
+/**
+    Value class extended to IntValue and BoolValue.
+    Object for storing the value of a variable.
+    To be used in the Interpreter and CodeGenerator
+*/
 abstract class Value {}
 
     class IntValue extends Value {

@@ -1,7 +1,18 @@
 import java.util.HashMap;
-
+/**
+    The Interpreter translates the input program into Java
+*/
 public class Interpreter {
 
+    /**
+        This method interprets commands. Loops through the command AST and calls
+        the mehtod for interpreting expressions which changes the values of the
+        variables in the store.
+        Input: Command and the initial store of variables and values
+        Output: new store of variables and values resulting from
+                interpreting the input program
+
+    */
     public HashMap<String, Value> interpretCommand (CommandAST command, HashMap<String, Value> initialStore ) {
         if(command instanceof SeqAst ) {
             HashMap<String, Value> newStore =
@@ -27,6 +38,14 @@ public class Interpreter {
 
     }
 
+    /**
+        This method interprets expressions and changes the values of the
+        variables in the store.
+        Input: an expression and the initial store of variables and values
+        Output: new store of variables and values resulting from
+                interpreting the expression
+
+    */
     public Value interpretExpr(ExprAST expr, HashMap<String, Value> store) {
         if(expr instanceof NumberAst) {
             return new IntValue(((NumberAst)expr).value);

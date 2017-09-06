@@ -1,3 +1,8 @@
+/*
+This is the jflex file for generating a lexer.
+Specifies all the lexical units in the language and their corresponding tokens.
+*/
+
 %%
 %type Token
 %class Lexer

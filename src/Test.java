@@ -4,6 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+    Testing class keeps track of how many tests run and passed.
+*/
+
 public class Test {
 
     private int testsRun = 0;
@@ -17,6 +21,16 @@ public class Test {
         return testsPassed == testsRun;
     }
 
+    /**
+        This method runs tests on programms written in the implemented language.
+        It throws exception if the expeced and returned output of interpreting
+        the input program do not match.
+
+        Input:  - filename, a String containing the name of the file containing the tested programm
+                - expectedOutput, a hashmap of variable names and values that the input program should return
+        Output: void
+
+    */
     public void testExample(String filename, HashMap<String, Value> expectedOutput) throws Exception {
         Lexer lexer = new Lexer(new FileReader(filename));
     	Parser parser = new Parser(lexer);
@@ -34,6 +48,11 @@ public class Test {
         }
         testsRun++;
     }
+
+    /**
+        This is the main method, testing various programs in different files.
+        Prints a record of how many tests were run and how many have passed.
+    */
 
     public static void main(String[] args) throws Exception {
         Test test = new Test();
